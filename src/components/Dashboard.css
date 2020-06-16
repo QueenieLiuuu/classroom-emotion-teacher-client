@@ -1,0 +1,10 @@
+.dashboard_content {
+  padding: 24px 48px;
+  min-height: 500px;
+}
+
+.dashboard_header {
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+}

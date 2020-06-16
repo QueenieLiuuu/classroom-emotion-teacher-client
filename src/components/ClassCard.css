@@ -1,0 +1,11 @@
+.class-card {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.class-card__score-section {
+  display: flex;
+  width: 30%;
+  justify-content: space-evenly;
+}

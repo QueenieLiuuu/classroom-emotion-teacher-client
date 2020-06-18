@@ -2,10 +2,20 @@
   height: 100px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #ffffff;
+  box-shadow:  0px 1px 1px 0px rgba(1, 1, 1, 0.3);
+  margin-bottom: 25px;
 }
 
 .class-card__score-section {
   display: flex;
   width: 30%;
   justify-content: space-evenly;
+}
+
+.class-card__teacher-section {
+  display: flex;
+  align-items: center;
 }

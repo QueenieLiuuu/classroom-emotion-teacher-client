@@ -13,7 +13,7 @@ function Dashboard() {
       <Layout>
         <Header className="dashboard_header">
           <div>Dashboard</div>
-          <div>Teacher Menu</div>
+          <div>Menu</div>
         </Header>
       </Layout>
       <Content className="dashboard_content">

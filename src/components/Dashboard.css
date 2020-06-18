@@ -1,6 +1,7 @@
 .dashboard_content {
   padding: 24px 48px;
   min-height: 500px;
+  background-color: #F8FAFB;
 }
 
 .dashboard_header {

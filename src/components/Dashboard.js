@@ -4,6 +4,7 @@ import './Dashboard.css';
 import ClassCard from './ClassCard';
 import AnalysisSection from './AnalysisSection';
 import ScoreChart from './ScoreChart';
+import ScoreSection from './ScoreSection';
 
 const { Header, Content } = Layout;
 
@@ -19,7 +20,7 @@ function Dashboard() {
       <Content className="dashboard_content">
         <ClassCard />
         <AnalysisSection />
-        <ScoreChart />
+        <ScoreSection />
       </Content>
     </div>
   );

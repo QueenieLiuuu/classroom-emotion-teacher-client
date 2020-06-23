@@ -1,45 +1,50 @@
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { XYPlot, LineSeries, XAxis, YAxis } from 'react-vis';
 import './ScoreChart.css'
-import { emotionScoreState } from '../services/emotionService';
+import {
+  emotionScoreState,
+  fetchEmotionData,
+  chartDataState,
+  classTimestampState,
+} from '../services/emotionService';
 
 export default function ScoreChart() {
 
-  const [ chartData, setEmotionScore ] = useRecoilState(emotionScoreState);
+  const [, setEmotionData ] = useRecoilState(emotionScoreState);
+  const chartData = useRecoilValue(chartDataState);
+  const classStartTimestamp = useRecoilValue(classTimestampState);
+  let interval;
 
-  let x = 10;
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setEmotionScore((currentValue) => {
-  //       const prevData = [ ...currentValue ];
-  //       if(prevData.length >= 15) {
-  //         prevData.shift();
-  //       }
-  //       x++;
-  //       const newPoint = {
-  //         x,
-  //         y: Math.random()*10,
-  //       };
-  //       return [...prevData, newPoint]
-  //     });
-  //   }, 1000);
+  const updateEmotionData = () => {
+    fetchEmotionData(
+      classStartTimestamp.toISOString(),
+      (new Date()).toISOString()
+    ).then((emotionData) => {
+      setEmotionData(emotionData)
+    });
+  }
 
-  //   return () => clearInterval(interval);
-  // }, [x, setEmotionScore]);
+  useEffect(() => {
+    interval = setInterval(() => {
+      updateEmotionData();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [setEmotionData]);
+
+  const xAxisLabels = chartData.map(({timeStamp}) => {
+    const date = new Date(timeStamp);
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+  });
 
   return (
     <div className="score-chart">
-      <div style={{fontSize: '18px', color: '#778CA2', margin: '8px 0px'}}>
-        Emotion Score Trend
-      </div>
-      <div>
-        <XYPlot height={300} width= {900}>
-          <XAxis />
-          <YAxis />
-          <LineSeries data={chartData} />
-        </XYPlot>
-      </div>
+      <XYPlot height={300} width= {900}>
+        <XAxis tickFormat={v => xAxisLabels[v]} />
+        <YAxis />
+        <LineSeries data={chartData} />
+      </XYPlot>
     </div>
   )
 }

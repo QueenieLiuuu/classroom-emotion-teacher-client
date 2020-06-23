@@ -1,6 +1,8 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import './ClassCard.css';
+import { useRecoilValue } from 'recoil';
+import { emotionScoreState } from '../services/emotionService';
 
 function ScoreCard(props) {
   return (
@@ -18,19 +20,25 @@ function ScoreCard(props) {
 
 export default function ClassCard() {
 
-  const currentScore = 56;
-  const currentActiveStudents = 10;
+  const emotionData = useRecoilValue(emotionScoreState) || [];
+  const latestDataPoint = emotionData.slice().pop() ?? {};
+
+  const {
+    averageScore = 0,
+    numActiveStudents = 0,
+    students = [],
+  } = latestDataPoint;
 
   const scoreData = [
     {
       label: 'Current Emotional Score',
       total: 100,
-      score: currentScore,
+      score: averageScore,
     },
     {
       label: 'Active Students',
-      total:  currentActiveStudents,
-      score: currentActiveStudents,
+      total:  students.length,
+      score: numActiveStudents,
     }
   ]
 

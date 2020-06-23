@@ -1,5 +1,7 @@
 import React from 'react';
 import './AnalysisSection.css';
+import { useRecoilValue } from 'recoil';
+import { emotionScoreState } from '../services/emotionService';
 
 function ScoreDot(props) {
 
@@ -21,18 +23,24 @@ function ScoreDot(props) {
 
 export default function AnalysisSection() {
 
+  const emotionData = useRecoilValue(emotionScoreState) || [];
+  const latestDataPoint = emotionData.slice().pop() ?? {};
+  const {
+    numEngagedStudents = 0,
+    numActiveStudents = 0,
+    students = [],
+  } = latestDataPoint;
+  const happyStudentsPercentage = students.length ? Math.round((numEngagedStudents / students.length) * 100) : 0;
+  const inFrameStudentsPercentage =  students.length ? Math.round((numActiveStudents / students.length) * 100) : 0;
+
   const analysisCards = [
     {
-      score: 56.2,
-      message: 'Students need more interaction'
+      score: happyStudentsPercentage,
+      message: 'Students are happy'
     },
     {
-      score: 36,
-      message: 'Students need more interaction'
-    },
-    {
-      score: 48,
-      message: 'Students need more interaction'
+      score: inFrameStudentsPercentage,
+      message: 'Students in front of camera'
     },
   ]
 

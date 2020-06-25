@@ -20,7 +20,7 @@ export const emotionScoreState = atom({
 export const chartDataState = selector({
   key: 'chartData',
   get: ({ get }) => {
-    return get(emotionScoreState).map((emotionData, i) => ({
+    return (get(emotionScoreState)||[]).slice(-30).map((emotionData, i) => ({
       x: i,
       y: emotionData.averageScore,
       timeStamp: emotionData.timeStamp,
@@ -32,3 +32,15 @@ export const classTimestampState = atom({
   key: 'classTimeStamp',
   default: new Date(),
 });
+
+export const currentStudentsState = selector({
+  key: 'currentStudents',
+  get: ({ get }) => {
+    const lastEmotionData = get(emotionScoreState).slice().pop();
+    if(!lastEmotionData) {
+      return '';
+    }
+
+    return (lastEmotionData.students || []).join(', ');
+  }
+})

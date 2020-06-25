@@ -2,14 +2,17 @@ import React from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import './ClassCard.css';
 import { useRecoilValue } from 'recoil';
-import { emotionScoreState } from '../services/emotionService';
+import { emotionScoreState, currentStudentsState } from '../services/emotionService';
+import { Tooltip } from 'antd';
 
 function ScoreCard(props) {
   return (
     <div style={{ }}>
-      <span>
-        {props.label}
-      </span>
+      <Tooltip title={props.tooltip} placement="left">
+        <span>
+          {props.label}
+        </span>
+      </Tooltip>
       <div>
         <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{ props.score }</span>
         <span>{ ` / ${props.total}` }</span>
@@ -21,6 +24,7 @@ function ScoreCard(props) {
 export default function ClassCard() {
 
   const emotionData = useRecoilValue(emotionScoreState) || [];
+  const studentsNames = useRecoilValue(currentStudentsState);
   const latestDataPoint = emotionData.slice().pop() ?? {};
 
   const {
@@ -39,6 +43,7 @@ export default function ClassCard() {
       label: 'Active Students',
       total:  students.length,
       score: numActiveStudents,
+      tooltip: studentsNames,
     }
   ]
 
@@ -61,12 +66,15 @@ export default function ClassCard() {
       </span>
       <span className="class-card__score-section">
         {
-          scoreData.map(({ label, total, score }) => (
-            <ScoreCard
-              key={ label }
-              score={ score }
-              total={ total }
-              label={ label } />
+          scoreData.map(({ label, total, score, tooltip }) => (
+
+              <ScoreCard
+                key={ label }
+                score={ score }
+                total={ total }
+                tooltip= {tooltip}
+                label={ label } />
+
           ))
         }
       </span>

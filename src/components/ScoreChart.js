@@ -28,7 +28,7 @@ export default function ScoreChart() {
   useEffect(() => {
     interval = setInterval(() => {
       updateEmotionData();
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [setEmotionData]);

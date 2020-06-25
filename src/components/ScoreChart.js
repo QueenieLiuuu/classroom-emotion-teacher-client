@@ -41,7 +41,7 @@ export default function ScoreChart() {
   return (
     <div className="score-chart">
       <XYPlot height={300} width= {900}>
-        <XAxis tickFormat={v => xAxisLabels[v]} />
+        <XAxis tickFormat={v => xAxisLabels[v]} tickLabelAngle={45} />
         <YAxis />
         <LineSeries data={chartData} />
       </XYPlot>

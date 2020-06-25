@@ -3,8 +3,8 @@ import { Layout } from 'antd';
 import './Dashboard.css';
 import ClassCard from './ClassCard';
 import AnalysisSection from './AnalysisSection';
-import ScoreChart from './ScoreChart';
 import ScoreSection from './ScoreSection';
+import { DebugPanel } from './DebugPanel';
 
 const { Header, Content } = Layout;
 
@@ -21,6 +21,7 @@ function Dashboard() {
         <ClassCard />
         <AnalysisSection />
         <ScoreSection />
+        <DebugPanel />
       </Content>
     </div>
   );
